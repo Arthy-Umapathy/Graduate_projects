@@ -1,15 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import AutoCompleteSearch from './Components/AutoCompleteSearch/AutoCompleteSearch';
+import React, { Component } from "react";
+import "./App.css";
+import AutoSearch from "./Components/AutoSearch";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 
-function App() {
-  return (
-    <div>
-      <AutoCompleteSearch /> 
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+        <h1>Search for Movie</h1>
+        </header>
+        <div className="AppComponentParentDiv"></div>
+        <AutoSearch/>
+      </div>
+    );
+  }
 }
 
 export default App;
