@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import {
   MDBContainer,
   MDBRow,
@@ -8,9 +9,8 @@ import {
   MDBCard,
   MDBCardBody,
 } from "mdbreact";
-import { BrowserRouter as Router, withRouter } from "react-router-dom";
-import NavBar from "../LandingPage/NavBar";
-import { Col } from "react-bootstrap";
+import { BrowserRouter as Router, withRouter, Link } from "react-router-dom";
+import { response } from "express";
 
 const usersJson = {
   description: "Login and passwords of users",
@@ -23,13 +23,27 @@ const usersJson = {
 };
 
 class SignIn extends React.Component {
-  state = {
-    userName: "",
-    password: "",
-    usersJson: {},
-  };
+  constructor() {
+    super();
+    this.state = {
+      name: "",
+      mail: "",
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
   componentDidMount() {
-    this.setState({ usersJson });
+    axios
+      .get("http://localhost:3000/users")
+      .then((response) => {
+        this.setState(
+          { name: response.data.user_name },
+          { mail: response.data.email }
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   getLoginData = (value, type) =>
@@ -37,39 +51,23 @@ class SignIn extends React.Component {
       [type]: value,
     });
 
-  onFormSubmit = (e) => {
-    e.preventDefault();
-    const { usersJson, userName, password } = this.state;
-    const filterUserName = Object.keys(usersJson.users).filter(
-      (e) => e === userName
-    );
-    if (
-      filterUserName.length > 0 &&
-      usersJson.users[userName].password === password
-    ) {
-      this.props.history.push("test");
-      window.localStorage.setItem(
-        "user",
-        JSON.stringify(usersJson.users[userName])
-      );
-    } else {
-      alert("Wrong login or password");
-    }
-  };
+  handleSubmit(event) {
+    event.preventDefault();
+  }
   render() {
     return (
       <div>
+        <br />
         <MDBContainer>
           <MDBRow className="d-flex justify-content-center">
             <MDBCol md="6">
               <MDBCard>
                 <MDBCardBody>
                   <form onSubmit={this.onFormSubmit}>
-                    <p className="h4 text-center py-4">Sign in</p>
+                    <p className="h4 text-center py-4">Log in</p>
                     <div className="grey-text">
                       <MDBInput
                         label="Type your email"
-                        icon="envelope"
                         group
                         type="text"
                         validate
@@ -80,24 +78,23 @@ class SignIn extends React.Component {
                         }
                       />
                       <MDBInput
-                        label="Type your password"
-                        icon="lock"
+                        label="Type your email"
                         group
-                        type="password"
+                        type="text"
                         validate
-                        getValue={(value) =>
-                          this.getLoginData(value, "password")
-                        }
+                        getValue={(value) => this.getLoginData(value, "email")}
                       />
                     </div>
                     <div className="text-center py-4 mt-3">
-                      <MDBBtn
-                        color="cyan"
-                        type="submit"
-                        onClick={this.onFormSubmit}
-                      >
-                        Login
-                      </MDBBtn>
+                      <Link to="/Welcome">
+                        <MDBBtn
+                          color="cyan"
+                          type="submit"
+                          onClick={this.handleSubmit}
+                        >
+                          Login
+                        </MDBBtn>
+                      </Link>
                     </div>
                   </form>
                 </MDBCardBody>

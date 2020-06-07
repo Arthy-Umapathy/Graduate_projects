@@ -1,0 +1,29 @@
+<html>
+  <body>
+    <div>
+      Create a user
+      <hr />
+      <form action="/login" method="POST">
+        <input placeholder="first name" name="create_name" />
+        <input placeholder="email" name="create_email" />
+        <input type="password" placeholder="password" name="create_pwd" />
+        <label for="topic">Choose a topic :</label>
+
+        <select name="topic" id="topic">
+          <option value="cloud">Cloud</option>
+          <option value="web">Web</option>
+          <option value="serverless">Serverless</option>
+          <option value="network">Network</option>
+        </select>
+        <button onclick="myFunction()">Submit</button>
+        <p id="demo"></p>
+        <script>
+          function myFunction() {
+            document.getElementById("demo").innerHTML =
+              "Successfully registered";
+          }
+        </script>
+      </form>
+    </div>
+  </body>
+</html>

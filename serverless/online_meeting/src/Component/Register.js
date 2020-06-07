@@ -8,12 +8,10 @@ import {
   MDBCard,
   MDBCardBody,
 } from "mdbreact";
-import NavBar from "../LandingPage/NavBar";
 
 const FormPage = () => {
   return (
     <div>
-      <NavBar />
       <br />
       <div>
         <MDBContainer>
@@ -22,11 +20,10 @@ const FormPage = () => {
               <MDBCard>
                 <MDBCardBody>
                   <form>
-                    <p className="h4 text-center py-4">Sign up</p>
+                    <p className="h4 text-center py-4">Register</p>
                     <div className="grey-text">
                       <MDBInput
                         label="Your name"
-                        icon="user"
                         group
                         type="text"
                         validate
@@ -35,7 +32,6 @@ const FormPage = () => {
                       />
                       <MDBInput
                         label="Your email"
-                        icon="envelope"
                         group
                         type="email"
                         validate
@@ -44,7 +40,6 @@ const FormPage = () => {
                       />
                       <MDBInput
                         label="Confirm your email"
-                        icon="exclamation-triangle"
                         group
                         type="text"
                         validate
@@ -53,7 +48,6 @@ const FormPage = () => {
                       />
                       <MDBInput
                         label="Your password"
-                        icon="lock"
                         group
                         type="password"
                         validate
