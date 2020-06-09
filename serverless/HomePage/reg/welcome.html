@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+  </head>
+  <body>
+    <div id="myData"></div>
+    <div id="user">User</div>
+    <script>
+      const api_url = "http://localhost:3000/user_details";
+
+      fetch(api_url)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          appendData(data);
+        })
+        .catch(function (err) {
+          console.log("error:" + err);
+        });
+      function appendData(data) {
+        var mainContainer = document.getElementById("myData");
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].onlinetime != null) {
+            var now = new Date().getMinutes();
+            var db = new Date(data[i].onlinetime);
+            console.log("time" + i + (now - db.getMinutes()));
+            if (now - db.getMinutes() <= 1) {
+              var h1 = document.createElement("h1");
+              h1.innerHTML = "Welcome " + data[i].mail;
+              mainContainer.appendChild(h1);
+            }
+          }
+          if (data[i].state == "online") {
+            var cont = document.getElementById("user");
+            var user = document.createElement("div");
+            user.innerHTML = data[i].mail;
+            cont.appendChild(user);
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
