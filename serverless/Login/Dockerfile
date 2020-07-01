@@ -2,14 +2,14 @@
 FROM node:12.17
 
 # Set working directory. Paths will be relative this WORKDIR.
-WORKDIR /Login
+WORKDIR /HomePage
 
 # Install dependencies
-COPY package.json /Login
+COPY package.json /HomePage
 RUN npm install
 
 # Copy source files from host computer to the container
-COPY . /Login
+COPY . /HomePage
 
 
 # Specify port app runs on

@@ -6,10 +6,9 @@ const path = require("path");
 
 //home page routing
 router.get("/", (req, res) => {
-  return res.send("go to users");
+  res.redirect("register.html");
 });
 
-// // router.engine("html", require("ejs").renderFile);
 router.set("view engine", "ejs");
 
 var gusername = "";
@@ -28,9 +27,11 @@ router.post("/welcome.html", (req, res) => {
       function (error, results, fields) {
         if (results.length > 0) {
           gusername = userid;
+
+          var now = new Date();
           connection.query(
-            "update user_state set state = ? where mail = ?",
-            [online, userid],
+            "update user_state set state = ? ,onlinetime = ? where mail = ?",
+            [online, now, userid],
             (error, results, fields) => {
               if (error) {
                 console.log(error.message);
@@ -38,8 +39,6 @@ router.post("/welcome.html", (req, res) => {
             }
           );
           res.redirect("welcome.html");
-          // obj = { print: results };
-          // res.render("welcome", { userData: { obj: obj } });
         } else {
           res.send("Incorrect Username and/or Password!");
         }
@@ -54,10 +53,9 @@ router.post("/welcome.html", (req, res) => {
 
 var obj = {};
 
-router.get("/welcomes", (req, res) => {
-  res.sendFile(__dirname + "/welcome.html");
-  console.log("here");
-});
+// router.get("/welcome.html", (req, res) => {
+//   res.sendFile(__dirname + "welcome.html");
+// });
 
 router.get("/user_details", (req, res) => {
   const query = "select * from user_state";
@@ -68,7 +66,6 @@ router.get("/user_details", (req, res) => {
 
 //posting the register page details into mysql
 router.post("/login", (req, res) => {
-  console.log("creating");
   console.log("first name:" + req.body.create_name);
 
   const name = req.body.create_name;

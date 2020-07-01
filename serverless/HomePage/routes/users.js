@@ -21,23 +21,17 @@ router.post("/welcome.html", (req, res) => {
   const pwds = req.body.password;
   const online = "online";
   if (userid && pwds) {
-    // connection.query("select * from user_state where currentuser=?"),["true"],(err,rows,fields){
-    //   if (err) {
-    //     console.log(err.message);
-    //   }
-    //   con
-    // }
     connection.query(
       "Select * from user_details where email = ? and pwd = ?",
       [userid, pwds],
       function (error, results, fields) {
         if (results.length > 0) {
           gusername = userid;
-          const current = "true";
+
           var now = new Date();
           connection.query(
-            "update user_state set state = ? , currentuser = ? ,onlinetime = ? where mail = ?",
-            [online, current, now, userid],
+            "update user_state set state = ? ,onlinetime = ? where mail = ?",
+            [online, now, userid],
             (error, results, fields) => {
               if (error) {
                 console.log(error.message);

@@ -5,12 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
+    <style>
+      .center {
+        text-align: center;
+        border: 3px solid green;
+      }
+    </style>
   </head>
   <body>
-    <div id="myData"></div>
+    <div class="center">
+      <div id="myData"><h1>Welcome Sam</h1></div>
+      <h2 id="user" class="center">Other online users:</h2>
+    </div>
     <script>
       const api_url = "http://localhost:3000/user_details";
-      console.log("inside");
+
       fetch(api_url)
         .then(function (response) {
           return response.json();
@@ -22,22 +31,26 @@
           console.log("error:" + err);
         });
       function appendData(data) {
+        const current = "";
         var mainContainer = document.getElementById("myData");
         for (var i = 0; i < data.length; i++) {
           if (data[i].onlinetime != null) {
-            console.log("date" + data[i].onlinetime);
-            console.log(Math.abs(Date - data[i].onlinetime));
+            var now = new Date().getMinutes();
+            var db = new Date(data[i].onlinetime);
+            console.log("time" + i + (now - db.getMinutes()));
+
+            // if (now - db.getMinutes() <= 1) {
+            //   var h1 = document.createElement("h1");
+
+            //   h1.innerHTML = "Welcome " + data[i].mail;
+            //   mainContainer.appendChild(h1);
+            // }
           }
-          // if (Date().getTime() - data[i].onlinetime < 1) {
-          //   console.log("dateeee");
-          //   var h1 = document.createElement("h1");
-          //   h1.innerHTML = "Welcome " + data[i].emailid;
-          //   mainContainer.appendChild(h1);
-          // }
-          if (data[i].state == "online") {
-            var div = document.createElement("div");
-            div.innerHTML = "Name:" + data[i].mail;
-            mainContainer.appendChild(div);
+          if (data[i].state == "online" && data[i].mail != "sam@gmail.com") {
+            var cont = document.getElementById("user");
+            var user = document.createElement("div");
+            user.innerHTML = data[i].mail;
+            cont.appendChild(user);
           }
         }
       }

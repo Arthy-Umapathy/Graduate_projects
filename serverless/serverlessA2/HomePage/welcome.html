@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <style>
+      .center {
+        text-align: center;
+        border: 3px solid green;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="/register.html" method="POST"></form>
+    <div class="center">
+      <div id="myData"><h1>Welcome</h1></div>
+      <h2 id="user" class="center">Other online users:</h2>
+      <button onclick="myfunction()">Logout</button>
+    </div>
+    <script>
+      const api_url = "https://loginpage-2gxx57eeza-de.a.run.app/user_details";
+
+      fetch(api_url)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          appendData(data);
+        })
+        .catch(function (err) {
+          console.log("error:" + err);
+        });
+
+      function myFunction() {
+        document.getElementById("demo").innerHTML = "Logging out";
+      }
+      //Extracting details from the api and displaying in the welcome page
+      function appendData(data) {
+        const current = "";
+        var mainContainer = document.getElementById("myData");
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].onlinetime != null) {
+            var now = new Date().getMinutes();
+            var db = new Date(data[i].onlinetime);
+            //gets the current user
+            if (now - db.getMinutes() <= 1) {
+              var h1 = document.createElement("h1");
+
+              h1.innerHTML = "Welcome " + data[i].mail;
+              mainContainer.appendChild(h1);
+            }
+          }
+          //gets the users online currently
+          if (data[i].state == "online") {
+            var cont = document.getElementById("user");
+            var user = document.createElement("div");
+            user.innerHTML = data[i].mail;
+            cont.appendChild(user);
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
