@@ -1,0 +1,5 @@
+# Default ignored files
+/workspace.xml
+/uiDesigner.xml
+target
+log4j-application.log

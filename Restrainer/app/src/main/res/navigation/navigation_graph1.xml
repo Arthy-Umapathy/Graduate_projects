@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph1"
+    app:startDestination="@id/baseFragment">
+
+    <fragment
+        android:id="@+id/baseFragment"
+        android:name="com.example.restrainer.fragements.BaseFragment"
+        android:label="fragment_base"
+        tools:layout="@layout/fragment_base" >
+        <action
+            android:id="@+id/action_baseFragment_to_appListFagment4"
+            app:destination="@id/appListFagment4" />
+    </fragment>
+    <fragment
+        android:id="@+id/appListFagment4"
+        android:name="com.example.restrainer.fragements.AppListFragment"
+        android:label="AppListFagment" >
+        <action
+            android:id="@+id/action_appListFagment4_to_baseFragment"
+            app:destination="@id/baseFragment" />
+        <action
+            android:id="@+id/action_appListFagment4_to_timeFragment"
+            app:destination="@id/timeFragment" />
+        <action
+            android:id="@+id/action_appListFagment4_to_usageStatsFragment"
+            app:destination="@id/usageStatsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/timeFragment"
+        android:name="com.example.restrainer.fragements.TimeFragment"
+        android:label="time_fragment"
+        tools:layout="@layout/time_fragment" >
+        <action
+            android:id="@+id/action_timeFragment_to_appListFagment4"
+            app:destination="@id/appListFagment4" />
+    </fragment>
+    <fragment
+        android:id="@+id/usageStatsFragment"
+        android:name="com.example.restrainer.fragements.UsageStatsFragment"
+        android:label="UsageStatsFragment" >
+        <action
+            android:id="@+id/action_usageStatsFragment_to_appListFagment4"
+            app:destination="@id/appListFagment4" />
+    </fragment>
+</navigation>
